@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N3漢字テスト 第17章 解説</title>
+<style>
+:root {
+  --main: #2563eb;
+  --light: #eff6ff;
+  --correct: #15803d;
+  --correct-bg: #f0fdf4;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #dbe3ef;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--text);
+  background: #f5f7fb;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans JP", "Noto Sans", Arial, sans-serif;
+  line-height: 1.7;
+}
+header {
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  color: white;
+  padding: 20px 16px 28px;
+}
+.header-inner {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+h1 { font-size: 1.35rem; margin: 0 0 4px; }
+.subtitle { margin: 0; opacity: .9; font-size: .9rem; }
+select {
+  min-width: 135px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  font-size: .9rem;
+  background: white;
+  color: #1f2937;
+}
+main { max-width: 900px; margin: 0 auto; padding: 18px 12px 50px; }
+.intro, .question {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(30, 64, 175, .06);
+}
+.intro { padding: 16px; margin-bottom: 16px; }
+.intro p { margin: 5px 0; }
+.question { padding: 18px; margin: 16px 0; }
+.question-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.number {
+  color: var(--main);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.badge {
+  background: var(--light);
+  color: var(--main);
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: .78rem;
+  white-space: nowrap;
+}
+.sentence {
+  background: #f8fafc;
+  border-left: 4px solid var(--main);
+  padding: 12px 14px;
+  border-radius: 5px;
+  font-size: 1.05rem;
+  margin-bottom: 14px;
+}
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+.option {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #fff;
+}
+.option.correct {
+  color: var(--correct);
+  background: var(--correct-bg);
+  border-color: #86efac;
+  font-weight: 700;
+}
+.answer {
+  color: var(--correct);
+  font-weight: 700;
+  margin: 8px 0;
+}
+.explanation {
+  margin: 0;
+  white-space: pre-line;
+}
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: .85rem;
+  padding: 12px;
+}
+@media (max-width: 600px) {
+  .header-inner { align-items: stretch; flex-direction: column; }
+  select { width: 100%; }
+  .options { grid-template-columns: 1fr; }
+  .question { padding: 14px; }
+  .sentence { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <h1 id="pageTitle">【N3】漢字テスト 第17章 解説</h1>
+      <p class="subtitle" id="pageSubtitle">20問・正しい読み方と漢字を確認しましょう</p>
+    </div>
+    <select id="language" aria-label="言語を選択">
+      <option value="ja">日本語</option>
+      <option value="zh">简体中文</option>
+      <option value="zt">繁體中文</option>
+      <option value="ne">नेपाली</option>
+      <option value="my">မြန်မာဘာသာ</option>
+      <option value="it">Italiano</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <p id="introText">このページでは、正解だけでなく、文の意味と漢字の読み方をやさしく説明します。</p>
+  </section>
+  <div id="questions"></div>
+  <div class="footer">N3 漢字テスト 第17章</div>
+</main>
+
+<script>
+const content = {
+ja: {
+  title: "【N3】漢字テスト 第17章 解説",
+  subtitle: "20問・正しい読み方と漢字を確認しましょう",
+  intro: "このページでは、正解だけでなく、文の意味と漢字の読み方をやさしく説明します。",
+  answer: "正解",
+  explanation: "解説"
+},
+zh: {
+  title: "【N3】汉字测试 第17章 讲解",
+  subtitle: "20道题・确认正确的读法和汉字",
+  intro: "本页面不仅显示正确答案，还会简单说明句子的意思和汉字的读法。",
+  answer: "正确答案",
+  explanation: "讲解"
+},
+zt: {
+  title: "【N3】漢字測驗 第17章 解說",
+  subtitle: "20題・確認正確的讀法和漢字",
+  intro: "本頁面不只顯示正確答案，也會簡單說明句子的意思和漢字的讀法。",
+  answer: "正確答案",
+  explanation: "解說"
+},
+ne: {
+  title: "【N3】 कान्जी परीक्षा अध्याय १७ व्याख्या",
+  subtitle: "२० प्रश्न・सही उच्चारण र कान्जी जाँच गर्नुहोस्",
+  intro: "यस पृष्ठमा सही उत्तरसँगै वाक्यको अर्थ र कान्जीको उच्चारण सजिलो रूपमा बुझाइएको छ।",
+  answer: "सही उत्तर",
+  explanation: "व्याख्या"
+},
+my: {
+  title: "【N3】 ခန်းဂျီ စာမေးပွဲ အခန်း ၁၇ ရှင်းလင်းချက်",
+  subtitle: "မေးခွန်း ၂၀・မှန်ကန်သော အသံထွက်နှင့် ခန်းဂျီကို လေ့လာပါ",
+  intro: "ဤစာမျက်နှာတွင် အဖြေမှန်သာမက ဝါကျအဓိပ္ပာယ်နှင့် ခန်းဂျီအသံထွက်ကိုလည်း လွယ်ကူစွာ ရှင်းပြထားပါသည်။",
+  answer: "အဖြေမှန်",
+  explanation: "ရှင်းလင်းချက်"
+},
+it: {
+  title: "【N3】 Spiegazione del test dei kanji – Capitolo 17",
+  subtitle: "20 domande · Controlliamo letture e kanji corretti",
+  intro: "Questa pagina spiega in modo semplice non solo la risposta corretta, ma anche il significato della frase e la lettura del kanji.",
+  answer: "Risposta corretta",
+  explanation: "Spiegazione"
+}
+};
+
+const questions = [{ n:1, word:"人気者", options:["にんきじん","にんきひと","にんきもん","にんきもの"], correct:4,
+ sentence:{
+  ja:"彼はおもしろいので、クラスの【人気者】だ。",
+  zh:"他很有趣，所以是班里的【受欢迎的人】。",
+  zt:"他很有趣，所以是班上的【受歡迎的人】。",
+  ne:"उनी रमाइलो भएकाले कक्षाका 【लोकप्रिय व्यक्ति】 हुन्।",
+  my:"သူက စိတ်ဝင်စားစရာကောင်းလို့ အတန်းထဲက 【လူကြိုက်များသူ】 ဖြစ်တယ်။",
+  it:"È simpatico, quindi è la 【persona popolare】 della classe。"
+ },
+ exp:{
+  ja:"「人気者」は「にんきもの」と読みます。「人気」は にんき、「者」は もの です。クラスのみんなに好かれている人、という意味です。",
+  zh:"「人気者」读作「にんきもの」。「人気」是 にんき，「者」在这里读作 もの，意思是受到班上大家喜欢的人。",
+  zt:"「人気者」讀作「にんきもの」。「人気」是 にんき，「者」在這裡讀作 もの，意思是受到班上大家喜愛的人。",
+  ne:"「人気者」 लाई 「にんきもの」 पढिन्छ। 「人気」 को पढाइ にんき र 「者」 को पढाइ もの हो। यसको अर्थ सबैले मन पराउने व्यक्ति हो।",
+  my:"「人気者」 ကို 「にんきもの」 ဟု ဖတ်သည်။ 「人気」 သည် にんき၊ 「者」 သည် ဤနေရာတွင် もの ဟု ဖတ်သည်။ အတန်းထဲတွင် လူတိုင်းနှစ်သက်သောသူဟု အဓိပ္ပာယ်ရသည်။",
+  it:"「人気者」 si legge 「にんきもの」. 人気 si legge にんき e 者 qui si legge もの. Significa una persona amata e popolare nella classe。"
+ }
+},
+{
+ n:2, word:"機械", options:["きけい","けいき","かいき","きかい"], correct:4,
+ sentence:{ja:"新しい【機械】で車の部品を作る。",zh:"用新【机器】制造汽车零件。",zt:"用新【機器】製造汽車零件。",ne:"नयाँ 【मेसिन】 ले गाडीका पार्टहरू बनाउँछु।",my:"【စက်အသစ်】 ဖြင့် ကားအစိတ်အပိုင်းများ ပြုလုပ်သည်။",it:"Produciamo parti di automobili con una 【macchina】 nuova。"},
+ exp:{ja:"「機械」は「きかい」と読みます。工場などで物を作るためのマシン、という意味です。「きけい」ではありません。",zh:"「機械」读作「きかい」，意思是工厂等地方用来制造东西的机器。不是「きけい」。",zt:"「機械」讀作「きかい」，意思是在工廠等地方用來製造東西的機器。不是「きけい」。",ne:"「機械」 लाई 「きかい」 पढिन्छ। वस्तु बनाउन प्रयोग गरिने मेसिन भन्ने अर्थ हुन्छ। 「きけい」 सही होइन।",my:"「機械」 ကို 「きかい」 ဟု ဖတ်သည်။ ပစ္စည်းများပြုလုပ်ရန် အသုံးပြုသော စက်ဟု အဓိပ္ပာယ်ရသည်။ 「きけい」 မဟုတ်ပါ။",it:"「機械」 si legge 「きかい」. Indica una macchina usata, per esempio in fabbrica, per produrre oggetti. 「きけい」 non è corretto。"}
+},
+{
+ n:3, word:"手術", options:["しゅきょう","しゅぎょう","しゅじゅつ","しゅしゅつ"], correct:3,
+ sentence:{ja:"来週、【手術】を受けることになった。",zh:"下周要接受【手术】。",zt:"下週要接受【手術】。",ne:"अर्को हप्ता 【शल्यक्रिया】 गराउने भएको छु।",my:"နောက်အပတ်တွင် 【ခွဲစိတ်ကုသမှု】 ခံယူရမည်။",it:"La prossima settimana dovrò sottopormi a un 【intervento chirurgico】。"},
+ exp:{ja:"「手術」は「しゅじゅつ」と読みます。病気やけがを治すために、医師が体を治療することです。",zh:"「手術」读作「しゅじゅつ」，是医生为了治疗疾病或伤势而进行的身体治疗。",zt:"「手術」讀作「しゅじゅつ」，是醫生為了治療疾病或傷勢而進行的身體治療。",ne:"「手術」 लाई 「しゅじゅつ」 पढिन्छ। रोग वा चोट निको पार्न डाक्टरले गर्ने उपचार हो।",my:"「手術」 ကို 「しゅじゅつ」 ဟု ဖတ်သည်။ ရောဂါ သို့မဟုတ် ဒဏ်ရာကို ကုသရန် ဆရာဝန်က ခန္ဓာကိုယ်ကို ကုသခြင်း ဖြစ်သည်။",it:"「手術」 si legge 「しゅじゅつ」. È un trattamento eseguito dal medico per curare una malattia o una ferita。"}
+},
+{
+ n:4, word:"費やした", options:["つみやした","つかやした","つたやした","ついやした"], correct:4,
+ sentence:{ja:"ダム建設に長い年月を【費やした】。",zh:"水坝建设花费了很长时间。",zt:"水壩建設花費了很長時間。",ne:"बाँध निर्माणमा धेरै वर्ष 【खर्च गरियो】।",my:"ဆည်တည်ဆောက်ရေးတွင် နှစ်ပေါင်းများစွာ 【သုံးစွဲခဲ့သည်】။",it:"Per la costruzione della diga abbiamo 【impiegato】 molti anni。"},
+ exp:{ja:"「費やした」は「ついやした」と読みます。「時間やお金を使った」という意味です。「長い年月を費やした」は、長い時間を使ったということです。",zh:"「費やした」读作「ついやした」，意思是使用了时间或金钱。「長い年月を費やした」就是花费了很长时间。",zt:"「費やした」讀作「ついやした」，意思是使用了時間或金錢。「長い年月を費やした」就是花費了很長時間。",ne:"「費やした」 लाई 「ついやした」 पढिन्छ। समय वा पैसा खर्च गर्नु भन्ने अर्थ हुन्छ। यहाँ धेरै लामो समय लागेको हो।",my:"「費やした」 ကို 「ついやした」 ဟု ဖတ်သည်။ အချိန် သို့မဟုတ် ငွေကို သုံးစွဲသည်ဟု အဓိပ္ပာယ်ရသည်။ ဤဝါကျတွင် အချိန်များစွာ သုံးစွဲခဲ့သည်ဟု ဆိုလိုသည်။",it:"「費やした」 si legge 「ついやした」 e significa usare tempo o denaro. Qui indica che sono passati molti anni。"}
+},
+{
+ n:5, word:"次第", options:["ぎだい","しだい","きだい","じだい"], correct:2,
+ sentence:{ja:"会社にもどり【次第】連絡してください。",zh:"回到公司后请立即联系。",zt:"回到公司後請立即聯絡。",ne:"कम्पनी फर्किनेबित्तिकै सम्पर्क गर्नुहोस्।",my:"ကုမ္ပဏီသို့ ပြန်ရောက်သည်နှင့် ဆက်သွယ်ပါ။",it:"Contattami 【non appena】 torni in azienda。"},
+ exp:{ja:"「次第」は「しだい」と読みます。「〜次第」は「〜したら、すぐに」という意味です。",zh:"「次第」读作「しだい」。「〜次第」表示“做完……后马上……”。",zt:"「次第」讀作「しだい」。「〜次第」表示「做完……後馬上……」。",ne:"「次第」 लाई 「しだい」 पढिन्छ। 「〜次第」 को अर्थ ‘गरेपछि तुरुन्तै’ हो।",my:"「次第」 ကို 「しだい」 ဟု ဖတ်သည်။ 「〜次第」 သည် “လုပ်ပြီးသည်နှင့် ချက်ချင်း” ဟု အဓိပ္ပာယ်ရသည်။",it:"「次第」 si legge 「しだい」. La forma 「〜次第」 significa “subito dopo aver fatto qualcosa”。"}
+},
+{
+ n:6, word:"危険", options:["きけん","じてん","じけん","きのう"], correct:1,
+ sentence:{ja:"ビルの窓ふきは【危険】な作業だが、時給がいい。",zh:"擦大楼窗户是【危险】的工作，但时薪很好。",zt:"擦大樓窗戶是【危險】的工作，但時薪很好。",ne:"भवनको झ्याल सफा गर्नु 【खतरनाक】 काम हो, तर प्रतिघण्टा ज्याला राम्रो छ।",my:"အဆောက်အအုံပြတင်းပေါက်သုတ်ခြင်းသည် 【အန္တရာယ်ရှိသော】 အလုပ်ဖြစ်သော်လည်း နာရီခ လစာကောင်းသည်။",it:"Pulire le finestre di un edificio è un lavoro 【pericoloso】, ma la paga oraria è buona。"},
+ exp:{ja:"「危険」は「きけん」と読みます。「危」は「あぶない」、「険」は「けわしい」というイメージで、あぶないことを表します。",zh:"「危険」读作「きけん」，表示危险的事情。「危」有危险的意思，「険」也有艰险的感觉。",zt:"「危険」讀作「きけん」，表示危險的事情。「危」有危險的意思，「険」也有艱險的感覺。",ne:"「危険」 लाई 「きけん」 पढिन्छ। यसको अर्थ खतरनाक अवस्था वा काम हो।",my:"「危険」 ကို 「きけん」 ဟု ဖတ်သည်။ အန္တရာယ်ရှိသော အခြေအနေ သို့မဟုတ် အလုပ်ဟု အဓိပ္ပာယ်ရသည်။",it:"「危険」 si legge 「きけん」 e significa pericolo o qualcosa di rischioso。"}
+},
+{
+ n:7, word:"供える", options:["となえる","かなえる","になえる","そなえる"], correct:4,
+ sentence:{ja:"おはかに花を【供える】。",zh:"在墓前【供奉】鲜花。",zt:"在墓前【供奉】鮮花。",ne:"चिहानमा फूल 【चढाउँछु】।",my:"သင်္ချိုင်းတွင် ပန်းများ 【ပူဇော်သည်】။",it:"【Offro】 dei fiori alla tomba。"},
+ exp:{ja:"「供える」は「そなえる」と読みます。神様や仏様、亡くなった人のために、食べ物や花などを置くことです。",zh:"「供える」读作「そなえる」，表示为了神、佛或去世的人而摆放食物和花等。",zt:"「供える」讀作「そなえる」，表示為了神、佛或去世的人而擺放食物和花等。",ne:"「供える」 लाई 「そなえる」 पढिन्छ। भगवान्, बुद्ध वा मृत व्यक्तिका लागि फूल वा खाना राख्नु हो।",my:"「供える」 ကို 「そなえる」 ဟု ဖတ်သည်။ ဘုရား၊ ဗုဒ္ဓ သို့မဟုတ် ကွယ်လွန်သူအတွက် အစားအစာနှင့် ပန်းများ ထားခြင်း ဖြစ်သည်။",it:"「供える」 si legge 「そなえる」. Significa deporre fiori o cibo per una divinità, un Buddha o una persona defunta。"}
+},
+{
+ n:8, word:"学費", options:["がくひ","がっきん","がくほ","がっぴ"], correct:1,
+ sentence:{ja:"親に【学費】を送ってもらった。",zh:"父母给我寄来了【学费】。",zt:"父母寄給我【學費】。",ne:"आमाबुबाले मलाई 【पढाइ शुल्क】 पठाइदिनुभयो।",my:"မိဘများက 【ကျောင်းလခ】 ပို့ပေးခဲ့သည်။",it:"I miei genitori mi hanno mandato i 【soldi per la retta scolastica】。"},
+ exp:{ja:"「学費」は「がくひ」と読みます。学校で勉強するために必要なお金です。「費」は「ひ」と読みます。",zh:"「学費」读作「がくひ」，是学习时需要支付给学校的钱。「費」读作「ひ」。",zt:"「学費」讀作「がくひ」，是學習時需要支付給學校的錢。「費」讀作「ひ」。",ne:"「学費」 लाई 「がくひ」 पढिन्छ। विद्यालयमा पढ्न आवश्यक पर्ने पैसा हो।",my:"「学費」 ကို 「がくひ」 ဟု ဖတ်သည်။ ကျောင်းတွင် ပညာသင်ရန် လိုအပ်သော ငွေဖြစ်သည်။",it:"「学費」 si legge 「がくひ」. Sono i soldi necessari per studiare a scuola。"}
+},
+{
+ n:9, word:"次", options:["ふぎ","すぎ","いぎ","つぎ"], correct:4,
+ sentence:{ja:"【次】の日曜日、天気がよかったらハイキングに行こう。",zh:"【下个】星期日天气好的话去远足吧。",zt:"【下個】星期日天氣好的話去健行吧。",ne:"【अर्को】 आइतबार मौसम राम्रो भए हाइकिङ जाऔँ।",my:"【လာမည့်】 တနင်္ဂနွေနေ့တွင် ရာသီဥတုကောင်းလျှင် တောင်တက်ခရီးသွားကြမယ်။",it:"Domenica 【prossima】, se il tempo è bello, andiamo a fare un'escursione。"},
+ exp:{ja:"「次」は、この文では「つぎ」と読みます。「次の日曜日」は、今度の日曜日、または次の日曜日という意味です。",zh:"「次」在本句中读作「つぎ」。「次の日曜日」表示下一个星期日。",zt:"「次」在本句中讀作「つぎ」。「次の日曜日」表示下一個星期日。",ne:"यस वाक्यमा 「次」 लाई 「つぎ」 पढिन्छ। 「次の日曜日」 को अर्थ अर्को आइतबार हो।",my:"ဤဝါကျတွင် 「次」 ကို 「つぎ」 ဟု ဖတ်သည်။ 「次の日曜日」 သည် လာမည့်တနင်္ဂနွေနေ့ဟု အဓိပ္ပာယ်ရသည်။",it:"In questa frase 「次」 si legge 「つぎ」. 「次の日曜日」 significa la prossima domenica。"}
+},
+{
+ n:10, word:"実技", options:["じつわ","じつぎ","じっき","じつげん"], correct:2,
+ sentence:{ja:"筆記と【実技】の試験を受ける。",zh:"参加笔试和【实际操作】考试。",zt:"參加筆試和【實際操作】考試。",ne:"लिखित र 【व्यावहारिक】 परीक्षा दिन्छु।",my:"စာရေးစာမေးပွဲနှင့် 【လက်တွေ့】 စာမေးပွဲကို ဖြေမည်။",it:"Sosterrò un esame scritto e uno 【pratico】。"},
+ exp:{ja:"「実技」は「じつぎ」と読みます。実際にやってみる技術や、その試験のことです。「筆記」の反対に近い言葉です。",zh:"「実技」读作「じつぎ」，表示实际操作的技能或实际操作考试，与「笔试」相对。",zt:"「実技」讀作「じつぎ」，表示實際操作的技能或實際操作考試，與「筆記」相對。",ne:"「実技」 लाई 「じつぎ」 पढिन्छ। वास्तवमा काम गरेर देखाउने सीप वा परीक्षा हो।",my:"「実技」 ကို 「じつぎ」 ဟု ဖတ်သည်။ လက်တွေ့လုပ်ဆောင်ပြရသော ကျွမ်းကျင်မှု သို့မဟုတ် စာမေးပွဲ ဖြစ်သည်။",it:"「実技」 si legge 「じつぎ」. Indica una competenza pratica o un esame in cui bisogna dimostrare concretamente ciò che si sa fare。"}
+},
+{
+ n:11, word:"税金", options:["積金","程金","稘金","税金"], correct:4,
+ sentence:{ja:"【ぜいきん】は有効に使わなければならない。",zh:"【税金】必须有效使用。",zt:"【稅金】必須有效使用。",ne:"【कर】 प्रभावकारी रूपमा प्रयोग गर्नुपर्छ।",my:"【အခွန်ငွေ】 ကို ထိရောက်စွာ အသုံးပြုရမည်။",it:"Le 【tasse】 devono essere utilizzate in modo efficace。"},
+ exp:{ja:"「ぜいきん」は「税金」と書きます。「税金」は、国や市区町村に払うお金です。",zh:"「ぜいきん」写作「税金」，意思是支付给国家或地方政府的钱。",zt:"「ぜいきん」寫作「税金」，意思是支付給國家或地方政府的錢。",ne:"「ぜいきん」 लाई 「税金」 लेखिन्छ। देश वा स्थानीय सरकारलाई तिर्ने पैसा हो।",my:"「ぜいきん」 ကို 「税金」 ဟု ရေးသည်။ နိုင်ငံတော် သို့မဟုတ် ဒေသန္တရအစိုးရထံ ပေးရသောငွေ ဖြစ်သည်။",it:"「ぜいきん」 si scrive 「税金」. Sono i soldi pagati allo Stato o al comune。"}
+},
+{
+ n:12, word:"旧友", options:["童友","児友","旧友","古友"], correct:3,
+ sentence:{ja:"久しぶりに【きゅうゆう】と再会した。",zh:"久违地与【老朋友】重逢。",zt:"久違地與【老朋友】重逢。",ne:"धेरै समयपछि 【पुरानो साथी】 सँग फेरि भेट भयो।",my:"အချိန်ကြာပြီးနောက် 【မိတ်ဆွေဟောင်း】 နှင့် ပြန်တွေ့ခဲ့သည်။",it:"Dopo molto tempo ho rivisto un 【vecchio amico】。"},
+ exp:{ja:"「きゅうゆう」は「旧友」と書きます。「旧」は「古い」という意味です。昔からの友達を「旧友」と言います。",zh:"「きゅうゆう」写作「旧友」。「旧」有过去、旧的意思，因此以前认识的朋友叫作「旧友」。",zt:"「きゅうゆう」寫作「舊友」。「舊」有過去、舊的意思，因此以前認識的朋友叫作「舊友」。",ne:"「きゅうゆう」 लाई 「旧友」 लेखिन्छ। 「旧」 को अर्थ पुरानो हो। लामो समयदेखि चिनिएको साथीलाई यसरी भनिन्छ।",my:"「きゅうゆう」 ကို 「旧友」 ဟု ရေးသည်။ 「旧」 သည် ဟောင်းသည်ဟု အဓိပ္ပာယ်ရသည်။ ရှေးကတည်းက သိကျွမ်းသော မိတ်ဆွေကို ဆိုလိုသည်။",it:"「きゅうゆう」 si scrive 「旧友」. 旧 significa “vecchio” e indica un amico conosciuto da molto tempo。"}
+},
+{
+ n:13, word:"貿易", options:["資易","賛易","賀易","貿易"], correct:4,
+ sentence:{ja:"友人と【ぼうえき】会社を作り、自動車部品を売っている。",zh:"我和朋友成立了【贸易】公司，销售汽车零件。",zt:"我和朋友成立了【貿易】公司，銷售汽車零件。",ne:"साथीसँग 【व्यापार】 कम्पनी खोलेर गाडीका पार्टहरू बेच्दैछु।",my:"သူငယ်ချင်းနှင့် 【ကုန်သွယ်ရေး】 ကုမ္ပဏီတည်ထောင်ပြီး ကားအစိတ်အပိုင်းများ ရောင်းနေသည်။",it:"Ho fondato con un amico una società di 【commercio】 e vendiamo parti di automobili。"},
+ exp:{ja:"「ぼうえき」は「貿易」と書きます。外国との間で商品を売ったり買ったりすることです。",zh:"「ぼうえき」写作「貿易」，表示与外国之间买卖商品。",zt:"「ぼうえき」寫作「貿易」，表示與外國之間買賣商品。",ne:"「ぼうえき」 लाई 「貿易」 लेखिन्छ। विदेशी देशसँग सामान किनबेच गर्नु हो।",my:"「ぼうえき」 ကို 「貿易」 ဟု ရေးသည်။ နိုင်ငံခြားနှင့် ကုန်ပစ္စည်းများ ဝယ်ရောင်းခြင်း ဖြစ်သည်။",it:"「ぼうえき」 si scrive 「貿易」. Significa comprare e vendere merci tra paesi diversi。"}
+},
+{
+ n:14, word:"副作用", options:["幅作用","副作用","福作用","服作用"], correct:2,
+ sentence:{ja:"かぜ薬の【ふくさよう】でねむくなった。",zh:"因为感冒药的【副作用】而困了。",zt:"因為感冒藥的【副作用】而感到想睡。",ne:"रुघाखोकीको औषधिको 【साइड इफेक्ट】 ले निद्रा लाग्यो।",my:"အအေးမိဆေး၏ 【ဘေးထွက်ဆိုးကျိုး】 ကြောင့် အိပ်ချင်လာသည်။",it:"Mi è venuto sonno a causa degli 【effetti collaterali】 della medicina per il raffreddore。"},
+ exp:{ja:"「ふくさよう」は「副作用」と書きます。薬が病気を治す以外に、体に与えることがある影響です。",zh:"「ふくさよう」写作「副作用」，指药物治疗疾病以外可能对身体产生的影响。",zt:"「ふくさよう」寫作「副作用」，指藥物治療疾病以外可能對身體產生的影響。",ne:"「ふくさよう」 लाई 「副作用」 लेखिन्छ। औषधिले रोग निको पार्नुबाहेक शरीरमा पार्न सक्ने असर हो।",my:"「ふくさよう」 ကို 「副作用」 ဟု ရေးသည်။ ဆေးက ရောဂါကုသခြင်းအပြင် ခန္ဓာကိုယ်အပေါ် သက်ရောက်နိုင်သော အကျိုးဆက် ဖြစ်သည်။",it:"「ふくさよう」 si scrive 「副作用」. Sono gli effetti che un farmaco può avere sul corpo oltre alla cura della malattia。"}
+},
+{
+ n:15, word:"商業", options:["尚業","商業","賞業","省業"], correct:2,
+ sentence:{ja:"新しくできた【しょうぎょう】ビルで買い物する。",zh:"在新建成的【商业】大楼里购物。",zt:"在新建成的【商業】大樓裡購物。",ne:"नयाँ बनेको 【व्यावसायिक】 भवनमा किनमेल गर्छु।",my:"အသစ်ဆောက်ထားသော 【စီးပွားရေး】 အဆောက်အအုံတွင် ဈေးဝယ်သည်။",it:"Faccio acquisti in un nuovo edificio 【commerciale】。"},
+ exp:{ja:"「しょうぎょう」は「商業」と書きます。商品を売ったり買ったりする仕事や活動です。",zh:"「しょうぎょう」写作「商業」，是买卖商品的工作或活动。",zt:"「しょうぎょう」寫作「商業」，是買賣商品的工作或活動。",ne:"「しょうぎょう」 लाई 「商業」 लेखिन्छ। सामान बेच्ने र किन्ने काम वा गतिविधि हो।",my:"「しょうぎょう」 ကို 「商業」 ဟု ရေးသည်။ ကုန်ပစ္စည်းများ ဝယ်ရောင်းသော အလုပ် သို့မဟုတ် လုပ်ငန်း ဖြစ်သည်။",it:"「しょうぎょう」 si scrive 「商業」. Indica l’attività di vendere e comprare prodotti。"}
+},
+{
+ n:16, word:"最も", options:["取も","撮も","最も","景も"], correct:3,
+ sentence:{ja:"東京は日本で【もっとも】人口が多い。",zh:"东京是日本【最】人口多的地方。",zt:"東京是日本【最】多人口的地方。",ne:"टोकियो जापानमा 【सबैभन्दा】 धेरै जनसङ्ख्या भएको ठाउँ हो।",my:"တိုကျိုသည် ဂျပန်နိုင်ငံတွင် လူဦးရေ 【အများဆုံး】 ဖြစ်သည်။",it:"Tokyo è la città con 【la maggior】 popolazione del Giappone。"},
+ exp:{ja:"「もっとも」は「最も」と書きます。「いちばん」という意味です。「日本で最も人口が多い」は、日本で人口がいちばん多いという意味です。",zh:"「もっとも」写作「最も」，意思是“最、第一”。句子表示东京是日本人口最多的地方。",zt:"「もっとも」寫作「最も」，意思是「最、第一」。句子表示東京是日本人口最多的地方。",ne:"「もっとも」 लाई 「最も」 लेखिन्छ। यसको अर्थ ‘सबैभन्दा’ हो।",my:"「もっとも」 ကို 「最も」 ဟု ရေးသည်။ “အများဆုံး၊ အကောင်းဆုံး” ဟု အဓိပ္ပာယ်ရသည်။",it:"「もっとも」 si scrive 「最も」 e significa “il più”. La frase dice che Tokyo ha la popolazione più numerosa del Giappone。"}
+},
+{
+ n:17, word:"予算", options:["予質","予筆","予算","予筧"], correct:3,
+ sentence:{ja:"来年度の【よさん】が決まった。",zh:"明年度的【预算】已经确定。",zt:"下年度的【預算】已經決定。",ne:"अर्को आर्थिक वर्षको 【बजेट】 तय भयो।",my:"လာမည့်ဘဏ္ဍာနှစ်၏ 【ဘတ်ဂျက်】 သတ်မှတ်ပြီးပြီ။",it:"Il 【budget】 per il prossimo anno fiscale è stato deciso。"},
+ exp:{ja:"「よさん」は「予算」と書きます。これから使うお金について、先に計画した金額です。",zh:"「よさん」写作「予算」，指提前计划好的、今后要使用的钱。",zt:"「よさん」寫作「預算」，指事先計畫好的、今後要使用的金額。",ne:"「よさん」 लाई 「予算」 लेखिन्छ। भविष्यमा प्रयोग गर्ने पैसाको पहिले बनाइएको योजना हो।",my:"「よさん」 ကို 「予算」 ဟု ရေးသည်။ နောင်တွင် သုံးမည့်ငွေကို ကြိုတင်စီစဉ်ထားသော ပမာဏ ဖြစ်သည်။",it:"「よさん」 si scrive 「予算」. È la somma di denaro pianificata in anticipo per il futuro。"}
+},
+{
+ n:18, word:"昔", options:["昔","音","早","前"], correct:1,
+ sentence:{ja:"家がならんでいるこの辺りは【むかし】、畑だった。",zh:"现在房屋林立的这一带【以前】是农田。",zt:"現在房屋林立的這一帶【以前】是農田。",ne:"अहिले घरहरू भएको यो ठाउँ 【पहिले】 खेत थियो।",my:"ယခုအိမ်များတန်းစီနေသော ဤနေရာသည် 【ယခင်က】 လယ်ကွင်းဖြစ်ခဲ့သည်။",it:"Questa zona, dove ora ci sono molte case, 【un tempo】 era un campo。"},
+ exp:{ja:"「むかし」は「昔」と書きます。今ではなく、ずっと前の時を表します。",zh:"「むかし」写作「昔」，表示不是现在，而是很久以前。",zt:"「むかし」寫作「昔」，表示不是現在，而是很久以前。",ne:"「むかし」 लाई 「昔」 लेखिन्छ। अहिलेभन्दा धेरै अघिको समयलाई जनाउँछ।",my:"「むかし」 ကို 「昔」 ဟု ရေးသည်။ ယခုမဟုတ်ဘဲ အတိတ်ကာလကို ဖော်ပြသည်။",it:"「むかし」 si scrive 「昔」 e indica un periodo molto precedente a quello attuale。"}
+},
+{
+ n:19, word:"現れた", options:["現われた","現た","現らわれた","現れた"], correct:4,
+ sentence:{ja:"山田さんは約束の時間から30分遅れて【あらわれた】。",zh:"山田先生迟到30分钟【出现了】。",zt:"山田先生遲到30分鐘【出現了】。",ne:"यामादा–सान तोकिएको समयभन्दा ३० मिनेट ढिलो 【आउनुभयो】।",my:"ယာမဒါဆန်သည် ချိန်းထားသောအချိန်ထက် မိနစ် ၃၀ နောက်ကျပြီး 【ရောက်လာသည်】။",it:"Il signor Yamada 【è arrivato】 con 30 minuti di ritardo。"},
+ exp:{ja:"「あらわれた」は「現れた」と書きます。「現れる」は、人や物が姿を見せる、という意味です。「現われた」と書くこともありますが、この問題では「現れた」が正解です。",zh:"「あらわれた」写作「現れた」，意思是人或物出现、露面。「現われた」也有这种写法，但本题选择「現れた」。",zt:"「あらわれた」寫作「現れた」，意思是人或物出現、露面。「現われた」也有這種寫法，但本題選擇「現れた」。",ne:"「あらわれた」 लाई 「現れた」 लेखिन्छ। यसको अर्थ व्यक्ति वा वस्तु देखिनु वा आइपुग्नु हो।",my:"「あらわれた」 ကို 「現れた」 ဟု ရေးသည်။ လူ သို့မဟုတ် အရာဝတ္ထုသည် ပေါ်လာသည်၊ ရောက်လာသည်ဟု အဓိပ္ပာယ်ရသည်။",it:"「あらわれた」 si scrive 「現れた」 e significa apparire o arrivare. Anche 「現われた」 è possibile, ma in questo test la risposta è 「現れた」。"}
+},
+{
+ n:20, word:"保管", options:["保菅","保管","保事","保官"], correct:2,
+ sentence:{ja:"大切な書類なので、きちんと【ほかん】した。",zh:"因为是重要文件，所以妥善【保管】了。",zt:"因為是重要文件，所以妥善【保管】了。",ne:"महत्त्वपूर्ण कागजात भएकाले राम्ररी 【सुरक्षित राखेँ】।",my:"အရေးကြီးသော စာရွက်စာတမ်းဖြစ်သောကြောင့် သေချာ 【သိမ်းဆည်းထားသည်】။",it:"Poiché sono documenti importanti, li ho 【conservati】 con cura。"},
+ exp:{ja:"「ほかん」は「保管」と書きます。大切な物を、なくしたり壊したりしないように保存することです。",zh:"「ほかん」写作「保管」，表示为了不丢失、不损坏而妥善保存重要物品。",zt:"「ほかん」寫作「保管」，表示為了不遺失、不損壞而妥善保存重要物品。",ne:"「ほかん」 लाई 「保管」 लेखिन्छ। वस्तु हराउन वा बिग्रन नदिई सुरक्षित राख्नु हो।",my:"「ほかん」 ကို 「保管」 ဟု ရေးသည်။ အရာဝတ္ထုများ ပျောက်ဆုံးခြင်း၊ ပျက်စီးခြင်း မဖြစ်စေရန် သိမ်းဆည်းထားခြင်း ဖြစ်သည်။",it:"「ほかん」 si scrive 「保管」. Significa conservare con cura qualcosa per evitare che venga perso o danneggiato。"}
+}
+];
+
+function render() {
+  const lang = document.getElementById("language").value;
+  const c = content[lang];
+  document.documentElement.lang = lang === "ja" ? "ja" : lang;
+  document.getElementById("pageTitle").textContent = c.title;
+  document.getElementById("pageSubtitle").textContent = c.subtitle;
+  document.getElementById("introText").textContent = c.intro;
+
+  const html = questions.map(q => {
+    const opts = q.options.map((o, i) =>
+      `<div class="option ${i + 1 === q.correct ? "correct" : ""}">
+        ${i + 1}. ${o}${i + 1 === q.correct ? " ✓" : ""}
+      </div>`).join("");
+    return `<article class="question">
+      <div class="question-title">
+        <span class="number">問題 ${q.n}</span>
+        <span class="badge">1点</span>
+      </div>
+      <div class="sentence">${q.sentence[lang]}</div>
+      <div class="options">${opts}</div>
+      <div class="answer">${c.answer}: ${q.correct}. ${q.options[q.correct - 1]}</div>
+      <p class="explanation"><strong>${c.explanation}</strong><br>${q.exp[lang]}</p>
+    </article>`;
+  }).join("");
+  document.getElementById("questions").innerHTML = html;
+}
+
+document.getElementById("language").addEventListener("change", render);
+render();
+</script>
+</body>
+</html>
